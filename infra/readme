@@ -1,0 +1,15 @@
+ansible-inventory --list -i inventory/stage.ini
+ansible-inventory --list -i inventory/production.ini 
+ansible-inventory --graph -i inventory/stage.ini # отобразить в виде графы
+ansible -i inventory/production.ini -m ping web # ping на группу серверов
+
+ansible -i inventory/production.ini -m setup web # сбор фактов
+ansible -i inventory/stage.ini -m shell -a "hostname" web # отправка команду на сервер
+ansible all -m shell -a "ps -a"
+#скопировать на сервак
+echo "habahaba" > barmaley.txt
+ansible -i inventory/stage.ini -m copy -a "src=barmaley.txt dest=/tmp" web
+
+chmod 644 ./hosts # дать права на файл !!
+ansible all -m ping # отправить ping на все сервера (all) или можно использовать алиас
+ansible-galaxy init <имя роли> # создания ролей (пример ansible-galaxy init common)
